@@ -3,14 +3,54 @@
 
 
 let productos = [
-    {id: 1, nombre: "Guante Buceo 3 mm", precio: 18000, categoria: "Buceo Deportivo" },
-    {id: 2, nombre: "Chaleco Smooth 3mm", precio: 46900, categoria: "Buceo Deportivo"},
-    {id: 3, nombre: "Cressi Pro Star", precio: 52897, categoria: "Snorkeling"},
-    {id: 4, nombre: "Cressi Quantum", precio: 77266, categoria: "Snorkeling"},
-    {id: 5, nombre: "Pino Tokyo 4/3 mm", precio: 154000, categoria: "Surf"},
-    {id: 6, nombre: "Pino Raia 3mm", precio: 147285, categoria:"Surf"},
-    {id: 7, nombre: "Orca Hydro", precio: 20500, categoria: "Natación"},
-    {id: 8, nombre: "Aquon Casco Natacion 3mm", precio: 12500, categoria: "Natación"},
+    {
+        id: 1,
+        nombre: "Guante Buceo 3 mm",
+        precio: 18000,
+        categoria: "Buceo Deportivo" 
+    },
+    {
+        id: 2,
+        nombre: "Chaleco Smooth 3mm",
+        precio: 46900,
+        categoria: "Buceo Deportivo"
+    },
+    {
+        id: 3,
+        nombre: "Cressi Pro Star",
+        precio: 52897,
+        categoria: "Snorkeling"
+    },
+    {
+        id: 4,
+        nombre: "Cressi Quantum",
+        precio: 77266,
+        categoria: "Snorkeling"
+    },
+    {
+        id: 5,
+        nombre: "Pino Tokyo 4/3 mm",
+        precio: 154000,
+        categoria: "Surf"
+    },
+    {
+        id: 6,
+        nombre: "Pino Raia 3mm",
+        precio: 147285,
+        categoria:"Surf"
+    },
+    {
+        id: 7,
+        nombre: "Orca Hydro",
+        precio: 20500,
+        categoria: "Natación"
+    },
+    {
+        id: 8,
+        nombre: "Aquon Casco Natacion 3mm",
+        precio: 12500,
+        categoria: "Natación"
+    },
 ]
 
 
@@ -63,12 +103,26 @@ do {
         let id = Number(prompt("Ingrese el ID correspondiente para agregar al carrito, una vez agregado volverá a las opciones.\n\n " + listarProductos(productos)))
         agregarAlCarrito(carrito, id)
 
+
+
     }else if (opcion == 5){
         let total = carrito.reduce((acum, producto) => acum + producto.subtotal, 0)
-        alert("El total a pagar es: ")
+        alert("El total a pagar es: " + (total))
+        alert("Vuelva pronto " + (usuario))
+        break;
 
+    }else if (opcion == 4){
+        let categoria =  prompt("Ingrese la categoria que desee: Buceo Deportivo, Natación, Surf o Snorkeling, con la primera letra en mayúsculas.")
+        let productosCategoria = productos.filter(producto => producto.categoria === categoria)
+        alert(listarProductos(productosCategoria))
     }
 } while(opcion !=6)
+
+
+
+
+
+
 
 
 // Funcion para opcion 1
@@ -91,7 +145,26 @@ function idProducto (id){
 //Funcion para opcion 3
 function agregarAlCarrito(carrito, id){
     let idElegido = productos.find(producto => producto.id === id)
-carrito.push(idElegido)
+    let productoCarrito = carrito.find (producto => producto.id === id)
+
+    if (productoCarrito){
+        productoCarrito.unidades++
+        productoCarrito.subtotal = productoCarrito.precioUnitario * productoCarrito.unidades
+    }else {
+        carrito.push({
+            id: idElegido.id,
+            nombre: idElegido.nombre,
+            unidades: 1,
+            precioUnitario: idElegido.precio,
+            subtotal: idElegido.precio
+
+        })
+    }
+
+
+
+
+
 
     console.log(carrito)
     
@@ -99,6 +172,7 @@ carrito.push(idElegido)
 
 
 
+//Funcion para opcion 4
 
 
 
@@ -114,5 +188,9 @@ carrito.push(idElegido)
 
 
 
-//Funcion para opcion 5
+
+
+
+
+
 
